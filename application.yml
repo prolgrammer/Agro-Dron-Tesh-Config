@@ -1,0 +1,35 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-server:8761/eureka
+    instance:
+      preferIpAddress: true
+app:
+  jwt:
+    secret-refresh: 1234
+    secret-access: 1234
+    expiration-refresh: 2592000
+    expiration-access: 300
+    issuer: spring-app-tasks-manager
+    subject: user-details
+  gateway:
+    service-secret: 1234
+    host: http://gateway:8080
+spring:
+  jpa:
+    hibernate:
+      show-sql: true
+      ddl-auto: validate
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        "[spring.json.trusted.packages]": "dev.ivanov.tasks_manager.core.events.*"
+    
+  flyway:
+    locations: classpath:/db/migration

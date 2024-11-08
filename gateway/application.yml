@@ -1,0 +1,32 @@
+server:
+  port: 8080
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: true
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: auth_route
+            uri: lb://auth.service
+            predicates:
+              - Path=/api/auth/**
+          - id: uuid_route
+            uri: lb://uuid.service
+            predicates:
+              - Path=/api/uuid/**
+              - Header=x-service-secret, 1234
+          - id: user_route
+            uri: lb://user.service
+            predicates:
+              - Path=/api/users/**
+      discovery:
+        locator:
+          enabled: 'true'
+          lower-case-service-id: true
+
+        
