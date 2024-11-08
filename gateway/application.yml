@@ -15,6 +15,7 @@ spring:
             uri: lb://auth.service
             predicates:
               - Path=/api/auth/**
+              - Path=/api/kafka/**
           - id: uuid_route
             uri: lb://uuid.service
             predicates:
